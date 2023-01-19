@@ -2,7 +2,6 @@ package br.com.gusapi.data.vo.v1;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.github.dozermapper.core.Mapping;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
@@ -13,8 +12,7 @@ import java.util.Objects;
 public class BookVO extends RepresentationModel<BookVO> implements Serializable {
 
     @JsonProperty("id")
-    @Mapping("id")
-    private Long key;
+    private Long id;
     private String author;
     private Date launchDate;
     private Double price;
@@ -29,20 +27,20 @@ public class BookVO extends RepresentationModel<BookVO> implements Serializable 
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         BookVO bookVO = (BookVO) o;
-        return Objects.equals(key, bookVO.key);
+        return Objects.equals(id, bookVO.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), key);
+        return Objects.hash(super.hashCode(), id);
     }
 
-    public Long getKey() {
-        return key;
+    public Long getId() {
+        return id;
     }
 
-    public void setKey(Long key) {
-        this.key = key;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getAuthor() {

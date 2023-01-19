@@ -3,7 +3,7 @@ package br.com.gusapi.services;
 import br.com.gusapi.controllers.PersonController;
 import br.com.gusapi.data.vo.v1.PersonVO;
 import br.com.gusapi.exceptions.ResourceNotFoundException;
-import br.com.gusapi.mapper.DozerMapper;
+import br.com.gusapi.mapper.ApiMapper;
 import br.com.gusapi.model.Person;
 import br.com.gusapi.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class PersonServices {
         Person person = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
 
-        PersonVO vo = DozerMapper.parseObject(person, PersonVO.class);
+        PersonVO vo = ApiMapper.parseObject(person, PersonVO.class);
         vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
         return vo;
     }
@@ -46,10 +46,10 @@ public class PersonServices {
 
         logger.info("Finding all people!");
 
-        List<PersonVO> personVOS = DozerMapper.parseListObject(repository.findAll(), PersonVO.class);
+        List<PersonVO> personVOS = ApiMapper.parseListObject(repository.findAll(), PersonVO.class);
         personVOS
                 .stream()
-                .forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+                .forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getId())).withSelfRel()));
         return personVOS;
     }
 
@@ -57,10 +57,10 @@ public class PersonServices {
 
         logger.info("Creating one person!");
 
-        Person personConverted = DozerMapper.parseObject(person, Person.class);
+        Person personConverted = ApiMapper.parseObject(person, Person.class);
 
-        PersonVO personVO = DozerMapper.parseObject(repository.save(personConverted), PersonVO.class);
-        personVO.add(linkTo(methodOn(PersonController.class).findById(personVO.getKey())).withSelfRel());
+        PersonVO personVO = ApiMapper.parseObject(repository.save(personConverted), PersonVO.class);
+        personVO.add(linkTo(methodOn(PersonController.class).findById(personVO.getId())).withSelfRel());
         return personVO;
     }
 
@@ -68,7 +68,7 @@ public class PersonServices {
 
         logger.info("Updating person!");
 
-        Person personFound = repository.findById(person.getKey())
+        Person personFound = repository.findById(person.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
 
 
@@ -77,8 +77,8 @@ public class PersonServices {
         personFound.setAddress(person.getAddress());
         personFound.setGender(person.getGender());
 
-        PersonVO personVO = DozerMapper.parseObject(repository.save(personFound), PersonVO.class);
-        personVO.add(linkTo(methodOn(PersonController.class).findById(personVO.getKey())).withSelfRel());
+        PersonVO personVO = ApiMapper.parseObject(repository.save(personFound), PersonVO.class);
+        personVO.add(linkTo(methodOn(PersonController.class).findById(personVO.getId())).withSelfRel());
         return personVO;
     }
 

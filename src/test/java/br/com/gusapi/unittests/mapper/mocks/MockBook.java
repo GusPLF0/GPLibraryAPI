@@ -49,7 +49,7 @@ public class MockBook {
         book.setTitle("Title Test" + number);
         book.setAuthor("Author Test" + number);
         book.setLaunchDate(new Date());
-        book.setKey(number.longValue());
+        book.setId(number.longValue());
         book.setPrice(Double.valueOf(number));
         return book;
     }

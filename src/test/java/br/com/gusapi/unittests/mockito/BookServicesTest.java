@@ -49,7 +49,7 @@ class BookServicesTest {
         BookVO result = service.findById(1L);
 
         assertNotNull(result);
-        assertNotNull(result.getKey());
+        assertNotNull(result.getId());
         assertNotNull(result.getLinks());
         assertTrue(result.toString().contains("links: [</api/book/v1/1>;rel=\"self\"]"));
         assertEquals("Title Test1", result.getTitle());
@@ -71,14 +71,14 @@ class BookServicesTest {
         persisted.setId(1L);
 
         BookVO vo = input.mockVO(1);
-        vo.setKey(1L);
+        vo.setId(1L);
 
         when(repository.save(entity)).thenReturn(persisted);
 
         BookVO result = service.create(vo);
 
         assertNotNull(result);
-        assertNotNull(result.getKey());
+        assertNotNull(result.getId());
         assertNotNull(result.getLinks());
         assertTrue(result.toString().contains("links: [</api/book/v1/1>;rel=\"self\"]"));
         assertEquals("Title Test1", result.getTitle());
@@ -95,7 +95,7 @@ class BookServicesTest {
         Book persisted = entity;
 
         BookVO vo = input.mockVO(1);
-        vo.setKey(1L);
+        vo.setId(1L);
 
         when(repository.findById(1L)).thenReturn(Optional.of(entity));
         when(repository.save(entity)).thenReturn(persisted);
@@ -103,7 +103,7 @@ class BookServicesTest {
         BookVO result = service.update(vo);
 
         assertNotNull(result);
-        assertNotNull(result.getKey());
+        assertNotNull(result.getId());
         assertNotNull(result.getLinks());
         assertTrue(result.toString().contains("links: [</api/book/v1/1>;rel=\"self\"]"));
         assertEquals("Title Test1", result.getTitle());

@@ -2,7 +2,6 @@ package br.com.gusapi.config;
 
 import br.com.gusapi.security.jwt.JwtConfigurer;
 import br.com.gusapi.security.jwt.JwtTokenProvider;
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
@@ -26,7 +26,7 @@ public class SecurityConfig {
 
 	@Bean
 	PasswordEncoder encoder() {
-		Map<String, PasswordEncoder> encoders = new HashedMap();
+		Map<String, PasswordEncoder> encoders = new HashMap<>();
 		Pbkdf2PasswordEncoder pbkdf2PasswordEncoder = new Pbkdf2PasswordEncoder("", 16, 310000, Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256);
 		encoders.put("pbkdf2", pbkdf2PasswordEncoder);
 		DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder("pbkdf2", encoders);

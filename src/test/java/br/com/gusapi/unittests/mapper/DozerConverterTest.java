@@ -1,7 +1,7 @@
 package br.com.gusapi.unittests.mapper;
 
 import br.com.gusapi.data.vo.v1.PersonVO;
-import br.com.gusapi.mapper.DozerMapper;
+import br.com.gusapi.mapper.ApiMapper;
 import br.com.gusapi.model.Person;
 import br.com.gusapi.unittests.mapper.mocks.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,8 +22,8 @@ public class DozerConverterTest {
 
     @Test
     public void parseEntityToVOTest() {
-        PersonVO output = DozerMapper.parseObject(inputObject.mockEntity(), PersonVO.class);
-        assertEquals(Long.valueOf(0L), output.getKey());
+        PersonVO output = ApiMapper.parseObject(inputObject.mockEntity(), PersonVO.class);
+        assertEquals(Long.valueOf(0L), output.getId());
         assertEquals("First Name Test0", output.getFirstName());
         assertEquals("Last Name Test0", output.getLastName());
         assertEquals("Addres Test0", output.getAddress());
@@ -32,10 +32,10 @@ public class DozerConverterTest {
 
     @Test
     public void parseEntityListToVOListTest() {
-        List<PersonVO> outputList = DozerMapper.parseListObject(inputObject.mockEntityList(), PersonVO.class);
+        List<PersonVO> outputList = ApiMapper.parseListObject(inputObject.mockEntityList(), PersonVO.class);
         PersonVO outputZero = outputList.get(0);
 
-        assertEquals(Long.valueOf(0L), outputZero.getKey());
+        assertEquals(Long.valueOf(0L), outputZero.getId());
         assertEquals("First Name Test0", outputZero.getFirstName());
         assertEquals("Last Name Test0", outputZero.getLastName());
         assertEquals("Addres Test0", outputZero.getAddress());
@@ -43,7 +43,7 @@ public class DozerConverterTest {
 
         PersonVO outputSeven = outputList.get(7);
 
-        assertEquals(Long.valueOf(7L), outputSeven.getKey());
+        assertEquals(Long.valueOf(7L), outputSeven.getId());
         assertEquals("First Name Test7", outputSeven.getFirstName());
         assertEquals("Last Name Test7", outputSeven.getLastName());
         assertEquals("Addres Test7", outputSeven.getAddress());
@@ -51,7 +51,7 @@ public class DozerConverterTest {
 
         PersonVO outputTwelve = outputList.get(12);
 
-        assertEquals(Long.valueOf(12L), outputTwelve.getKey());
+        assertEquals(Long.valueOf(12L), outputTwelve.getId());
         assertEquals("First Name Test12", outputTwelve.getFirstName());
         assertEquals("Last Name Test12", outputTwelve.getLastName());
         assertEquals("Addres Test12", outputTwelve.getAddress());
@@ -60,7 +60,7 @@ public class DozerConverterTest {
 
     @Test
     public void parseVOToEntityTest() {
-        Person output = DozerMapper.parseObject(inputObject.mockVO(), Person.class);
+        Person output = ApiMapper.parseObject(inputObject.mockVO(), Person.class);
         assertEquals(Long.valueOf(0L), output.getId());
         assertEquals("First Name Test0", output.getFirstName());
         assertEquals("Last Name Test0", output.getLastName());
@@ -70,7 +70,7 @@ public class DozerConverterTest {
 
     @Test
     public void parserVOListToEntityListTest() {
-        List<Person> outputList = DozerMapper.parseListObject(inputObject.mockVOList(), Person.class);
+        List<Person> outputList = ApiMapper.parseListObject(inputObject.mockVOList(), Person.class);
         Person outputZero = outputList.get(0);
 
         assertEquals(Long.valueOf(0L), outputZero.getId());
