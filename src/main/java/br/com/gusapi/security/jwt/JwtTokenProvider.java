@@ -25,10 +25,13 @@ import java.util.List;
 public class JwtTokenProvider {
 
     Algorithm algorithm = null;
+
     @Value("${security.jwt.token.secret-key:secret}")
     private String secretKey = "secret";
+
     @Value("${security.jwt.token.expire-length:3600000}")
     private long validityInMilliseconds = 3600000;
+
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -45,6 +48,20 @@ public class JwtTokenProvider {
         String refreshToken = getRefreshToken(username, roles, now);
 
         return new TokenVO(username, true, now, validity, accessToken, refreshToken);
+    }
+
+    public TokenVO refreshToken(String refreshToken) {
+        if(refreshToken.contains("Bearer ")) refreshToken = refreshToken.substring("Bearer ".length());
+
+        JWTVerifier verifier = JWT.require(algorithm).build();
+
+        DecodedJWT decodedJWT = verifier.verify(refreshToken);
+
+        String username = decodedJWT.getSubject();
+
+        List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
+
+        return createAccessToken(username, roles);
     }
 
     private String getAccessToken(String username, List<String> roles, Date now, Date validity) {
@@ -81,9 +98,8 @@ public class JwtTokenProvider {
     private DecodedJWT decodedToken(String token) {
         Algorithm alg = Algorithm.HMAC256(secretKey.getBytes());
         JWTVerifier verifier = JWT.require(alg).build();
-        DecodedJWT decodedJWT = verifier.verify(token);
 
-        return decodedJWT;
+        return verifier.verify(token);
     }
 
     public String resolveToken(HttpServletRequest req) {
@@ -98,12 +114,12 @@ public class JwtTokenProvider {
     public boolean validadeToken(String token) {
         DecodedJWT decodedJWT = decodedToken(token);
         try {
-            if (decodedJWT.getExpiresAt().before(new Date())) {
+            if(decodedJWT.getExpiresAt().before(new Date())){
                 return false;
             }
             return true;
         } catch (Exception e) {
-			throw new InvalidJwtAuthenticationException("Expired or invalid JWT token!");
+            throw new InvalidJwtAuthenticationException("Expired or invalid JWT token!");
         }
     }
 }
