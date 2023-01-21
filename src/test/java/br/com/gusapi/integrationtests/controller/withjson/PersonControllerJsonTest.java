@@ -44,20 +44,19 @@ class PersonControllerJsonTest extends AbstractIntegrationTest {
     public void authorization() throws IOException {
         AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 
-        String accessToken =
-                given()
-                        .basePath("/auth/signin")
-                        .port(TestConfigs.SERVER_PORT)
-                        .contentType(TestConfigs.CONTENT_TYPE_JSON)
-                        .body(user)
-                        .when()
-                        .post()
-                        .then()
-                        .statusCode(200)
-                        .extract()
-                        .body()
-                        .as(TokenVO.class)
-                        .getAcessToken();
+        String accessToken = given()
+                .basePath("/auth/signin")
+                .port(TestConfigs.SERVER_PORT)
+                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .body(user)
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+                .extract()
+                .body()
+                .as(TokenVO.class)
+                .getAcessToken();
 
         specification = new RequestSpecBuilder()
                 .addHeader(HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
@@ -74,24 +73,23 @@ class PersonControllerJsonTest extends AbstractIntegrationTest {
     public void testCreate() throws IOException {
         mockPerson();
 
-        String content =
-                given()
-                        .spec(specification)
-                        .contentType(TestConfigs.CONTENT_TYPE_JSON)
-                        .header(TestConfigs.HEADER_PARAM_ORIGIN, ORIGIN_MAIN_URL)
-                        .body(personVO)
-                        .when()
-                        .post()
-                        .then()
-                        .statusCode(200)
+        String content = given().spec(specification)
+                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                    .header(HEADER_PARAM_ORIGIN, ORIGIN_MAIN_URL)
+                    .body(personVO)
+                    .when()
+                    .post()
+                .then()
+                    .statusCode(200)
                         .extract()
                         .body()
-                        .asString();
+                            .asString();
 
         PersonVO createdPerson = objectMapper.readValue(content, PersonVO.class);
         personVO = createdPerson;
 
         assertNotNull(createdPerson);
+
         assertNotNull(createdPerson.getId());
         assertNotNull(createdPerson.getFirstName());
         assertNotNull(createdPerson.getLastName());
@@ -113,15 +111,14 @@ class PersonControllerJsonTest extends AbstractIntegrationTest {
 
 
         String content =
-                given()
-                        .spec(specification)
+                given().spec(specification)
                         .contentType(TestConfigs.CONTENT_TYPE_JSON)
-                        .header(TestConfigs.HEADER_PARAM_ORIGIN, ORIGIN_FAIL_URL)
+                        .header(HEADER_PARAM_ORIGIN, ORIGIN_FAIL_URL)
                         .body(personVO)
                         .when()
                         .post()
                         .then()
-                        .statusCode(430)
+                        .statusCode(403)
                         .extract()
                         .body()
                         .asString();
@@ -142,8 +139,8 @@ class PersonControllerJsonTest extends AbstractIntegrationTest {
                 given()
                         .spec(specification)
                         .contentType(TestConfigs.CONTENT_TYPE_JSON)
-                        .header(TestConfigs.HEADER_PARAM_ORIGIN, ORIGIN_MAIN_URL)
-                        .body(personVO)
+                        .header(HEADER_PARAM_ORIGIN, ORIGIN_MAIN_URL)
+                        .pathParam("id", personVO.getId())
                         .when()
                         .get("{id}")
                         .then()
@@ -156,6 +153,7 @@ class PersonControllerJsonTest extends AbstractIntegrationTest {
         personVO = createdPerson;
 
         assertNotNull(createdPerson);
+
         assertNotNull(createdPerson.getId());
         assertNotNull(createdPerson.getFirstName());
         assertNotNull(createdPerson.getLastName());
@@ -181,7 +179,7 @@ class PersonControllerJsonTest extends AbstractIntegrationTest {
                 .spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
                 .header(TestConfigs.HEADER_PARAM_ORIGIN, ORIGIN_FAIL_URL)
-                .body(personVO)
+                .pathParam("id", personVO.getId())
                 .when()
                 .get("{id}")
                 .then()
@@ -189,9 +187,6 @@ class PersonControllerJsonTest extends AbstractIntegrationTest {
                 .extract()
                 .body()
                 .asString();
-
-        PersonVO createdPerson = objectMapper.readValue(content, PersonVO.class);
-        personVO = createdPerson;
 
         assertNotNull(content);
 

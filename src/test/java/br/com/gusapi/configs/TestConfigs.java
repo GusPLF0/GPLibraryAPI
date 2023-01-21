@@ -12,6 +12,6 @@ public class TestConfigs {
     public static final String CONTENT_TYPE_XML = "application/xml";
     public static final String CONTENT_TYPE_YML = "application/x-yaml";
 
-    public static final String ORIGIN_MAIN_URL = "https://localhost:8080";
-    public static final String ORIGIN_FAIL_URL = "https://localhost:3333";
+    public static final String ORIGIN_MAIN_URL = "http://localhost:8080";
+    public static final String ORIGIN_FAIL_URL = "http://localhost:3333";
 }
