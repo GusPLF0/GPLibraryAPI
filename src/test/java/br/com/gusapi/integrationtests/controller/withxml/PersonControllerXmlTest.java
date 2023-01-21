@@ -1,13 +1,11 @@
-package br.com.gusapi.integrationtests.controller.withjson;
+package br.com.gusapi.integrationtests.controller.withxml;
 
 import br.com.gusapi.configs.TestConfigs;
 import br.com.gusapi.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.gusapi.integrationtests.vo.AccountCredentialsVO;
 import br.com.gusapi.integrationtests.vo.PersonVO;
 import br.com.gusapi.integrationtests.vo.TokenVO;
-import br.com.gusapi.model.Person;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.common.mapper.TypeRef;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
@@ -25,11 +23,10 @@ import java.util.List;
 import static br.com.gusapi.configs.TestConfigs.*;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class PersonControllerJsonTest extends AbstractIntegrationTest {
+public class PersonControllerXmlTest extends AbstractIntegrationTest {
 
 
     private static RequestSpecification specification;
@@ -53,7 +50,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
         String accessToken = given()
                 .basePath("/auth/signin")
                 .port(TestConfigs.SERVER_PORT)
-                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .contentType(CONTENT_TYPE_XML)
                 .body(user)
                 .when()
                 .post()
@@ -82,7 +79,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
         mockPerson();
 
         String content = given(specification)
-                .contentType(ContentType.JSON)
+                .contentType(CONTENT_TYPE_XML)
                     .body(personVO)
                     .when()
                     .post()
@@ -117,7 +114,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
         personVO.setLastName("Stallman JR");
 
         String content = given(specification)
-                .contentType(ContentType.JSON)
+                .contentType(CONTENT_TYPE_XML)
                 .body(personVO)
                 .when()
                 .put()
@@ -154,7 +151,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
         String content =
                 given()
                         .spec(specification)
-                        .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                        .contentType(CONTENT_TYPE_XML)
                         .header(HEADER_PARAM_ORIGIN, ORIGIN_MAIN_URL)
                         .pathParam("id", personVO.getId())
                         .when()
@@ -202,7 +199,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
     public void testFindAll() throws Exception{
 
         var content = given(specification)
-                .contentType(ContentType.JSON)
+                .contentType(CONTENT_TYPE_XML)
                 .when()
                 .get()
                 .then()

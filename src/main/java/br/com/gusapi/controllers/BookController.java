@@ -28,7 +28,7 @@ public class BookController {
         this.services = services;
     }
     @GetMapping(value = "/{id}",
-            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML})
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Operation(summary = "Finds a Book", description = "Finds a Book",
             tags = {"Books"},
             responses = {
@@ -49,7 +49,7 @@ public class BookController {
         return services.findById(id);
     }
 
-    @GetMapping(produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML})
+    @GetMapping(produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Operation(summary = "Finds all Books", description = "Finds all Books",
             tags = {"Books"},
             responses = {
@@ -68,8 +68,8 @@ public class BookController {
     }
 
     @PostMapping(
-            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML},
-            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML})
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Operation(summary = "Adds a new Book", description = "Adds a new Book",
             tags = {"Books"},
             responses = {
@@ -86,8 +86,8 @@ public class BookController {
     }
 
     @PutMapping(
-            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML},
-            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML})
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Operation(summary = "Updates a Book", description = "Updates a Book",
             tags = {"People"},
             responses = {

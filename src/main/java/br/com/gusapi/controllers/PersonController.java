@@ -30,7 +30,7 @@ public class PersonController {
 
     @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping(value = "/{id}",
-            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML})
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Operation(summary = "Finds a Person", description = "Finds a Person",
             tags = {"People"},
             responses = {
@@ -52,7 +52,7 @@ public class PersonController {
         return service.findById(id);
     }
 
-    @GetMapping(produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML})
+    @GetMapping(produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Operation(summary = "Finds all People", description = "Finds all People",
             tags = {"People"},
             responses = {
@@ -72,8 +72,8 @@ public class PersonController {
     }
 
     @PostMapping(
-            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML},
-            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML})
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Operation(summary = "Adds a new Person", description = "Adds a new Person",
             tags = {"People"},
             responses = {
@@ -93,8 +93,8 @@ public class PersonController {
     }
 
     @PutMapping(
-            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML},
-            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML})
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Operation(summary = "Updates a Person", description = "Updates a Person",
             tags = {"People"},
             responses = {

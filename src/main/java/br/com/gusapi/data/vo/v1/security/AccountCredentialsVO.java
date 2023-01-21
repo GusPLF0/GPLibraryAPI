@@ -6,9 +6,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class AccountCredentialsVO implements Serializable {
-    @JsonProperty("userr")
     private String username;
-    @JsonProperty("pass")
     private String password;
 
     public AccountCredentialsVO() {

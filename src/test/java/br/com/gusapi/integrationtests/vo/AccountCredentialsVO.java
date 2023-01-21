@@ -1,14 +1,16 @@
 package br.com.gusapi.integrationtests.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@XmlRootElement
 public class AccountCredentialsVO implements Serializable {
-    @JsonProperty("userr")
+
     private String username;
-    @JsonProperty("pass")
+
     private String password;
 
     public AccountCredentialsVO() {
