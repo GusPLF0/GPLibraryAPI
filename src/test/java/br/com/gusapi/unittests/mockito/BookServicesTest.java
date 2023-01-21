@@ -25,8 +25,10 @@ import static org.mockito.Mockito.when;
 class BookServicesTest {
 
     MockBook input;
+
     @Mock
     BookRepository repository;
+
     @InjectMocks
     private BookServices service;
 
