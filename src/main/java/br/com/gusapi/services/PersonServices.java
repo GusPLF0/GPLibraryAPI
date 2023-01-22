@@ -6,6 +6,7 @@ import br.com.gusapi.exceptions.ResourceNotFoundException;
 import br.com.gusapi.mapper.ApiMapper;
 import br.com.gusapi.model.Person;
 import br.com.gusapi.repositories.PersonRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -81,6 +82,21 @@ public class PersonServices {
         personVO.add(linkTo(methodOn(PersonController.class).findById(personVO.getId())).withSelfRel());
         return personVO;
     }
+
+	@Transactional
+	public PersonVO disablePerson(Long id) {
+
+		logger.info("Disabling one person!");
+
+		repository.disablePerson(id);
+
+		Person person = repository.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
+
+		PersonVO vo = ApiMapper.parseObject(person, PersonVO.class);
+		vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+		return vo;
+	}
 
     public void delete(Long id) {
 
