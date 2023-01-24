@@ -8,6 +8,8 @@ import br.com.gusapi.model.Person;
 import br.com.gusapi.repositories.PersonRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,15 +45,17 @@ public class PersonServices {
         return vo;
     }
 
-    public List<PersonVO> findAll() {
+    public Page<PersonVO> findAll(Pageable pageable) {
 
         logger.info("Finding all people!");
 
-        List<PersonVO> personVOS = ApiMapper.parseListObject(repository.findAll(), PersonVO.class);
-        personVOS
-                .stream()
-                .forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getId())).withSelfRel()));
-        return personVOS;
+		Page<Person> personPage = repository.findAll(pageable);
+
+		Page<PersonVO> personVoPage = personPage.map(p -> ApiMapper.parseObject(p, PersonVO.class));
+
+		personVoPage.map(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getId())).withSelfRel()));
+
+        return personVoPage;
     }
 
     public PersonVO create(PersonVO person) {
