@@ -1,8 +1,11 @@
 package br.com.gusapi.services;
 
 import br.com.gusapi.config.FileStorageConfig;
+import br.com.gusapi.exceptions.ApiFileNotFoundExceptionException;
 import br.com.gusapi.exceptions.FileStorageException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,6 +46,17 @@ public class FileStorageService {
 			return filename;
 		}catch (Exception e){
 			throw  new FileStorageException("Could'nt store file "+ filename + ". Please try again!");
+		}
+	}
+
+	public Resource loadFileAsResource(String filename){
+		try {
+			Path filePath = this.fileStorageLocation.resolve(filename).normalize();
+			Resource resource = new UrlResource(filePath.toUri());
+			if(resource.exists()) return resource;
+			else throw new ApiFileNotFoundExceptionException("File not found");
+		}catch (Exception e){
+			throw new ApiFileNotFoundExceptionException("File not found " + filename, e);
 		}
 	}
 }
