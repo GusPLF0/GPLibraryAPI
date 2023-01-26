@@ -2,6 +2,8 @@
 
 Esta API permite que os usuários gerem uma biblioteca de livros com operações CRUD. Ele também inclui recursos como versionamento, migrações de banco de dados com Flyway, content negotiation, HATEOS, documentação Swagger e autenticação.
 
+[![Docker Hub Repo](https://img.shields.io/docker/pulls/gusplf/rest-with-spring-boot-gus.svg)](https://hub.docker.com/repository/docker/gusplf/rest-with-spring-boot-gus)
+
 ## Endpoints
 
 - `GET /api/book/v1`: Recupera uma lista de todos os livros na biblioteca
