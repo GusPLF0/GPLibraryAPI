@@ -1,6 +1,6 @@
 # API de Gerenciamento de Livros
 
-Esta API permite que os usuários gerem uma biblioteca de livros com operações CRUD. Ele também inclui recursos como versionamento, migrações de banco de dados com Flyway, content negotiation, HATEOS, documentação Swagger e autenticação.
+Esta API permite que os usuários gerenciem uma biblioteca de livros com operações CRUD. Ele também inclui recursos como versionamento, migrações de banco de dados com Flyway, content negotiation, HATEOS, documentação Swagger e autenticação.
 
 ## Confira o repositório da aplicação no Docker Hub
 [![Docker Hub Repo](https://img.shields.io/docker/pulls/gusplf/rest-with-spring-boot-gus.svg)](https://hub.docker.com/repository/docker/gusplf/rest-with-spring-boot-gus)
