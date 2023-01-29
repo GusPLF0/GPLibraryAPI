@@ -36,5 +36,3 @@ A API inclui a documentação Swagger, que pode ser acessada no seguinte link: h
 ## Autenticação
 
 A API usa tokens JWT (JSON Web Token) para autenticação.
-
-## Em breve: implantação da API na Amazon AWS
