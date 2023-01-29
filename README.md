@@ -31,7 +31,7 @@ A API usa HATEOAS (Hypermedia como Motor do Estado da Aplicação) para fornecer
 
 ## Swagger
 
-A API inclui a documentação Swagger, que pode ser acessada no ponto de extremidade `/swagger`.
+A API inclui a documentação Swagger, que pode ser acessada no seguinte link: https://app.swaggerhub.com/apis-docs/GPEDR56/GPLibraryAPI/1.0.0
 
 ## Autenticação
 
